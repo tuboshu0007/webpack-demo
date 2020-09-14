@@ -24,7 +24,7 @@ import './lib/mui/js/mui'
 let vm = new Vue({
     el: "#app",
     data: {
-        msg: 123
+        msg: 1234
     },
     render: createElement => createElement(app)
 })
