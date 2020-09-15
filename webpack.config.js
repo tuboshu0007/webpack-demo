@@ -19,7 +19,14 @@ module.exports = {
         open: true,
         port: 2999,
         hot: true,
-        contentBase: 'src'
+        contentBase: 'src',
+        proxy: {
+            '/api': {
+                target: 'https://api.ixiaowai.cn',
+                changeOrigin: true,
+                ws: true,
+            }
+        }
     },
     module: {
         rules: [
