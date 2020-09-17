@@ -1,11 +1,15 @@
 const http = require('http')
-
+const fs = require('fs')
 const axios = require('axios')
 const url = require('url');
 const { isRegExp } = require('util');
+const { ReadStream, fstat } = require('fs');
+
+const path = require('path')
 
 const server = http.createServer().on('request', (req, res) => {
 
+    //轮播图获取
     if (req.url.indexOf('/api/api.php') == 0) {
         let urlTarget = "https://api.ixiaowai.cn" + req.url
         axios.all([
@@ -22,7 +26,6 @@ const server = http.createServer().on('request', (req, res) => {
             resArr.map(function (e, k) {
                 rst[k] = e.data
             })
-            console.log(rst);
             res.write(JSON.stringify(rst))
             res.end()
         }).catch(err => console.log(err))
@@ -32,6 +35,8 @@ const server = http.createServer().on('request', (req, res) => {
 })
 
 
+
+//主菜单响应
 server.on('request', (req, res) => {
     if (req.url.indexOf('/api/gridList') == 0) {
         res.writeHead(200,
@@ -71,5 +76,37 @@ server.on('request', (req, res) => {
         res.write(JSON.stringify(girdList))
         res.end()
 
+    }
+})
+
+
+server.on('request', (req, res) => {
+    console.log(req.url);
+
+    if (req.url.indexOf('/public/images') == 0) {
+        let readstream = new fs.createReadStream('.' + req.url)
+        let data
+        readstream.on('data', chunk => {
+            data += chunk
+        })
+        readstream.on('end', () => {
+            res.writeHead(200, { "Content-Type": "image/jpeg" }, { "Access-Control-Allow-Origin": "http://localhost:2999" })
+            res.end(data)
+        })
+        readstream.on('err', (err) => {
+            console.log(err);
+
+        })
+    }
+})
+
+server.on('request', (req, res) => {
+    if (req.url == '/getartlist') {
+        let list = fs.readdir('./public/images', "utf-8", (err, files) => {
+            if (err) throw err
+            // console.log(files);
+            res.writeHead(200, { "Access-Control-Allow-Origin": "http://localhost:2999" })
+            res.end(files.toString())
+        })
     }
 })

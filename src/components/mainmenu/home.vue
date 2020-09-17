@@ -3,7 +3,7 @@
     <!-- 轮播图区域 -->
     <mt-swipe :auto="4000">
       <mt-swipe-item v-for="item in swipeList" :key="item.imgurl">
-        <img :src="item.imgurl" alt />
+        <img :src="item.imgurl" />
       </mt-swipe-item>
     </mt-swipe>
     <!-- 主体部分 -->
@@ -14,11 +14,10 @@
           v-for="item in gridList"
           :key="item.name"
         >
-          <a href="#">
-            <!-- <span class="mui-icon"></span> -->
+          <router-link to="/home/artlist">
             <img :src="item.iconImgUrl" class="imgIcon" />
             <div class="mui-media-body">{{ item.name }}</div>
-          </a>
+          </router-link>
         </li>
       </ul>
     </div>
@@ -50,7 +49,6 @@ export default {
         .get("http://127.0.0.1:3000/api/gridList")
         .then((res) => {
           this.gridList = res.data;
-          console.log(res.data);
         })
         .catch((err) => {
           console.log(err);

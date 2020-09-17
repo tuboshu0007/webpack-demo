@@ -3,6 +3,9 @@ import Vue from 'vue/dist/vue'
 
 import app from './App.vue'
 
+
+
+
 //导入axios
 import VueAxiosPlugin from 'vue-axios-plugin'
 Vue.use(VueAxiosPlugin, {
@@ -22,10 +25,6 @@ Vue.use(VueRouter)
 import router from './router'
 
 
-
-
-
-
 //导入bootsrap样式
 import 'bootstrap/dist/css/bootstrap.min.css'
 
@@ -34,7 +33,6 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import MintUI from 'mint-ui'
 import 'mint-ui/lib/style.css'
 //导入Mint-UI轮播图组件
-
 Vue.use(MintUI)
 
 //导入MUI样式
