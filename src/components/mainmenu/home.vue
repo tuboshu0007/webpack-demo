@@ -1,9 +1,9 @@
 <template>
-  <div>
+  <div class="homeContainer">
     <!-- 轮播图区域 -->
     <mt-swipe :auto="4000">
-      <mt-swipe-item v-for="item in swipeList" :key="item.imgurl">
-        <img :src="item.imgurl" />
+      <mt-swipe-item v-for="item in swipeList" :key="item.data.imgurl">
+        <img v-lazy="item.data.imgurl" />
       </mt-swipe-item>
     </mt-swipe>
     <!-- 主体部分 -->
@@ -39,7 +39,7 @@ export default {
   methods: {
     getSwipeList() {
       this.$http
-        .get("http://127.0.0.1:3000/api/api.php?return=json", {})
+        .get("http://127.0.0.1:3000/api/ACG?type=json&size=mw690", {})
         .then((res) => {
           this.swipeList = res.data;
         });
@@ -58,6 +58,13 @@ export default {
 };
 </script>
 <style  scoped>
+.homeContainer {
+  position: relative;
+}
+img[lazy="loading"] {
+  width: 100vw;
+  height: 100px;
+}
 .mint-swipe {
   height: 120px;
 }
